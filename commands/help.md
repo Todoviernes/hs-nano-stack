@@ -71,14 +71,16 @@ Full rules: `docs/CONTRIBUTING.md`.
 
 ## Scripts
 
+All scripts ship with the plugin and are invoked via `${CLAUDE_PLUGIN_ROOT}`:
+
 ```bash
-scripts/init-project.sh                                # bootstrap a consumer repo's .hs-nano/
-scripts/resolve.sh <phase>                             # latest non-superseded artifact
-scripts/artifact-write.sh <phase> < input.json         # write a phase artifact
-scripts/hubl-lint.sh path/to/module.html               # HubL syntax + |safe lint
-scripts/fields-schema-check.sh path/to/X.module/       # fields.json ↔ HubL ref check
-scripts/hs-validate.sh ./theme --account=<sandbox>     # hs theme validate + dry-run upload
-scripts/lighthouse-mobile.sh <preview-url>             # template for QA artifact
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/init-project.sh                                # bootstrap a consumer repo's .hs-nano/
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/resolve.sh <phase>                             # latest non-superseded artifact
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/artifact-write.sh <phase> < input.json         # write a phase artifact
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/hubl-lint.sh path/to/module.html               # HubL syntax + |safe lint
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/fields-schema-check.sh path/to/X.module/       # fields.json ↔ HubL ref check
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/hs-validate.sh ./theme --account=<sandbox>     # hs theme validate + dry-run upload
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/lighthouse-mobile.sh <preview-url>             # template for QA artifact
 ```
 
 ## Common questions

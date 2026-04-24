@@ -37,7 +37,7 @@ Out of scope: `node_modules/`, `.hs-nano/`, `.git/`, anything in `.gitignore`.
 3. Count `{#` and `#}` — should match.
 4. Look for `{{<space>` followed by no closing — multi-line expression bug.
 
-`scripts/hubl-lint.sh` covers 1-2 mechanically. Run it and inherit findings.
+`bash ${CLAUDE_PLUGIN_ROOT}/scripts/hubl-lint.sh <file>` covers 1-2 mechanically. Run it and inherit findings.
 
 ## Filters
 

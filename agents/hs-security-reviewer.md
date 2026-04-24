@@ -31,7 +31,7 @@ The most common HubSpot vulnerability. Every line that emits a value to HTML is 
 - Inline `<script>{{ ... }}</script>` — almost always wrong. Recommend moving to a `data-*` attribute and reading from JS.
 - Inline `<style>...{{ ... }}...</style>` — color-field values are safe (`#RRGGBB` only); arbitrary text fields are dangerous.
 
-Run `scripts/hubl-lint.sh` and pull every `safe-filter-on-module-var` finding into your artifact.
+Run `bash ${CLAUDE_PLUGIN_ROOT}/scripts/hubl-lint.sh <file>` and pull every `safe-filter-on-module-var` finding into your artifact.
 
 ## 2. Secrets in shipped code
 
