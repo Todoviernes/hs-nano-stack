@@ -1,7 +1,5 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "hs-nano-stack",
-  "description": "HubSpot/HubL nano-stack — phase-gated AI workflow for CMS Hub themes, landing pages, modules, and email templates.",
   "owner": {
     "name": "Santiago Vallejo",
     "email": "santiagovallejoc@gmail.com"
