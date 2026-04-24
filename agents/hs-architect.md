@@ -116,7 +116,7 @@ Be opinionated. The cost of a wrong scope is waste; the cost of pushback is a 30
   "success_signals": [
     "lighthouse mobile performance ≥ 85",
     "fields-schema-check.sh exits 0 for every module",
-    "hs theme validate passes",
+    "scripts/hs-validate.sh passes (layer 1)",
     "form submits and creates a contact in sandbox"
   ]
 }

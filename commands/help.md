@@ -79,7 +79,8 @@ bash ${CLAUDE_PLUGIN_ROOT}/scripts/resolve.sh <phase>                           
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/artifact-write.sh <phase> < input.json         # write a phase artifact
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/hubl-lint.sh path/to/module.html               # HubL syntax + |safe lint
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/fields-schema-check.sh path/to/X.module/       # fields.json ↔ HubL ref check
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/hs-validate.sh ./theme --account=<sandbox>     # hs theme validate + dry-run upload
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/hs-validate.sh ./theme                         # local schema check (layer 1, no portal)
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/hs-validate.sh ./theme --account=<sandbox> --remote=<theme-name>   # + post-upload marketplace-validate
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/lighthouse-mobile.sh <preview-url>             # template for QA artifact
 ```
 

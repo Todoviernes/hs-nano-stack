@@ -17,7 +17,7 @@ A Claude Code plugin that ports the [garagon/nanostack](https://github.com/garag
 | `/hsns:build` | Scaffolds HubL files, `fields.json`, `meta.json`, `theme.json` from frozen plan | source files |
 | `/hsns:review` | HubL correctness, schema integrity, scope-drift detection vs plan | `.hs-nano/review/<TS>.json` |
 | `/hsns:security` | HubL XSS, `\|safe` audit, secrets in `module.js`, OWASP for forms | `.hs-nano/security/<TS>.json` |
-| `/hsns:qa` | `hs theme validate`, `hs upload --dry-run`, Lighthouse, screenshots, a11y | `.hs-nano/qa/<TS>.json` |
+| `/hsns:qa` | `scripts/hs-validate.sh`, `hs upload --dry-run`, Lighthouse, screenshots, a11y | `.hs-nano/qa/<TS>.json` |
 | `/hsns:ship` | `hs upload` to sandbox → preview → optional `--promote` to prod, sprint journal | `.hs-nano/ship/<TS>.json` |
 
 Plus: `/hsns:feature` (additive change, skips `/think`), `/hsns:help` (one-pager).
@@ -48,7 +48,7 @@ git init
 /hsns:build                    # scaffolds HubL/JSON files
 /hsns:review                   # checks scope drift, HubL correctness, schema integrity
 /hsns:security                 # HubL XSS, secrets, CSP audit
-/hsns:qa                       # hs theme validate + Lighthouse + screenshots
+/hsns:qa                       # scripts/hs-validate.sh + Lighthouse + screenshots
 /hsns:ship --account=sandbox   # uploads to sandbox portal, generates sprint journal
 /hsns:ship --account=prod --promote   # promotes to production after sandbox QA
 ```

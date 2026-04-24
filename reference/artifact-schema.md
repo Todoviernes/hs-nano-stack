@@ -70,7 +70,7 @@ Once user-approved, `frozen` is set to `true` (in-place via `jq`). When a subseq
   "success_signals": [
     "lighthouse mobile performance ≥ 85",
     "fields-schema-check.sh exits 0",
-    "hs theme validate passes"
+    "scripts/hs-validate.sh passes (layer 1)"
   ]
 }
 ```

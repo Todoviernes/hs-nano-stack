@@ -33,7 +33,7 @@ Every email template MUST include all of these somewhere in the rendered output:
 {{ view_in_browser_link }}
 ```
 
-`hs theme validate` checks for these. Missing → blocking.
+`scripts/hs-validate.sh (layer 1)` checks for these. Missing → blocking.
 
 ## What's NOT allowed in email templates
 
@@ -182,7 +182,7 @@ Out of scope for hsns v0.1 (no Litmus / Email-on-Acid integration). Manual check
 3. Check forwarded copies (some clients re-render on forward).
 4. Verify unsubscribe link works.
 
-`/hsns:qa` runs `hs theme validate` and structural checks; it does not render across clients in v0.1.
+`/hsns:qa` runs `scripts/hs-validate.sh (layer 1)` and structural checks; it does not render across clients in v0.1.
 
 ## What `/hsns:nano` decides for emails
 

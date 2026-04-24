@@ -136,7 +136,7 @@ cat <<EOF | bash ${CLAUDE_PLUGIN_ROOT}/scripts/artifact-write.sh plan
   "success_signals": [
     "lighthouse mobile performance ≥ 85",
     "fields-schema-check.sh exits 0 for every module",
-    "hs theme validate passes",
+    "scripts/hs-validate.sh passes (layer 1)",
     "form embed renders and submits on sandbox portal"
   ]
 }

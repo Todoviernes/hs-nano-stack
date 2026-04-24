@@ -1,5 +1,5 @@
 ---
-description: Phase 6 of the hsns sprint. Run `hs theme validate`, `hs upload --dry-run`, Lighthouse mobile audit, multi-breakpoint screenshots, and basic a11y on a sandbox-portal preview. Produces .hs-nano/qa/<TS>.json.
+description: Phase 6 of the hsns sprint. Run `scripts/hs-validate.sh`, `hs upload --dry-run`, Lighthouse mobile audit, multi-breakpoint screenshots, and basic a11y on a sandbox-portal preview. Produces .hs-nano/qa/<TS>.json.
 ---
 
 You are running the `/hsns:qa` phase of the **hs-nano-stack** workflow. You are a **QA lead with HubSpot deployment depth**. The goal is to catch what review and security can't: how the page actually behaves when uploaded to a sandbox portal.
@@ -14,7 +14,7 @@ You are running the `/hsns:qa` phase of the **hs-nano-stack** workflow. You are 
 
 # Skills to load
 
-- `hubspot-cli-deploy` — for `hs theme validate` and `hs upload --dry-run` semantics.
+- `hubspot-cli-deploy` — for `scripts/hs-validate.sh` and `hs upload --dry-run` semantics.
 - `hubspot-performance` — for interpreting Lighthouse and Core Web Vitals.
 - `hubspot-accessibility` — for the a11y pass.
 - For email: `hubspot-email`.
@@ -29,25 +29,33 @@ If the user has no sandbox configured, point them at `reference/setup-hs-cli.md`
 
 # QA steps
 
-## Step 1 — `hs theme validate` + dry-run upload
+## Step 1 — Layer-1 local schema check (pre-upload)
 
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/hs-validate.sh ./<theme-or-content-dir> --account=<sandbox>
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/hs-validate.sh ./<theme-or-content-dir>
 ```
 
-The script returns a JSON fragment. Capture stdout. If `validate.passed` is false, the QA pass fails — flag every error in the artifact.
+Pure-jq local check. Catches missing files, bad JSON shapes, missing `standard_*_includes` on page/landing templates. The script returns a JSON object; capture `.local_check.passed` and `.local_check.findings`. If `local_check.passed == false`, fail QA fast — no point uploading.
 
-## Step 2 — Sandbox upload (mode=publish)
+## Step 2 — Sandbox upload (cms-publish-mode=publish)
 
 QA always uploads to sandbox to make the page actually viewable.
 
 ```bash
-hs upload ./<theme-or-content-dir> <theme-name> --account=<sandbox> --mode=publish
+hs cms upload ./<theme-or-content-dir> <theme-name> --account=<sandbox> --cms-publish-mode=publish
 ```
 
 Capture the success message and the implied URLs:
 - Theme path inside Design Manager (e.g., `<theme-name>`).
 - For pages, the preview URL HubSpot prints, or the `https://<sandbox-portal>.hubspotpreview-<region>.com/_hcms/preview/...` URL.
+
+## Step 2b — Layer-2 marketplace-validate (post-upload)
+
+```bash
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/hs-validate.sh ./<theme-or-content-dir> --account=<sandbox> --remote=<theme-name>
+```
+
+Now that the theme is in the portal, `hs cms theme marketplace-validate` runs. If `marketplace_validate.passed == false`, flag every error.
 
 ## Step 3 — Lighthouse mobile audit
 
@@ -122,7 +130,7 @@ If you can't access the HubSpot UI from the agent, instruct the user to manually
 ## Step 8 — Email rendering (target: email)
 
 For email targets:
-- `hs theme validate` covers static structure.
+- `scripts/hs-validate.sh` covers static structure.
 - For cross-client preview, recommend Litmus or Email-on-Acid (out of scope for v0.1; record as a known gap).
 - Manually scan for inline-style usage and required tokens (`unsubscribe_link`, `view_as_page_url`).
 
@@ -175,7 +183,7 @@ The QA phase passes if:
 
 If passed: "QA clean. Run `/hsns:ship --account=<sandbox>` to confirm the sandbox is what you want, then `/hsns:ship --account=<prod> --promote` for production."
 
-If failed: "QA failed. Fix the failed signals (see `failed_signals`) and re-run from the appropriate phase: blocking signals from `hs theme validate` → `/hsns:build`; perf signals → `/hsns:build` (or perf agent); a11y signals → `/hsns:build` then `/hsns:review`."
+If failed: "QA failed. Fix the failed signals (see `failed_signals`) and re-run from the appropriate phase: blocking signals from `scripts/hs-validate.sh` → `/hsns:build`; perf signals → `/hsns:build` (or perf agent); a11y signals → `/hsns:build` then `/hsns:review`."
 
 # Anti-drift rules
 

@@ -135,7 +135,7 @@ Email templates have their own `templateType=email` and obey *very* different ru
 - No external CSS — inline styles or `<style>` in `<head>`.
 - Required tokens: `{{ unsubscribe_link }}`, `{{ company_name }}`, `{{ company_street_address_1 }}`, `{{ company_city }}`, `{{ view_as_page_url }}` (or `{{ view_in_browser_link }}`).
 
-Skipping any required token causes `hs theme validate` to error or HubSpot to refuse to send.
+Skipping any required token causes `scripts/hs-validate.sh (layer 1) + portal-side checks` to error or HubSpot to refuse to send.
 
 ## System templates
 

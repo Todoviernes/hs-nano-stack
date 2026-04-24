@@ -20,7 +20,7 @@ If any gate fails, refuse to ship and tell the user exactly which artifact is mi
 The user must pass:
 - `--account=<name>` — required, no default.
 - Optional: `--promote` — when present, `--account` should be the production portal AND a more recent QA artifact for the sandbox account is required.
-- Optional: `--mode=publish|draft` — defaults: `publish` for sandbox, `draft` for prod (unless `--promote`).
+- Optional: `--cms-publish-mode=publish|draft` — defaults: `publish` for sandbox, `draft` for prod (unless `--promote`).
 - Optional: `--dry-run` — print what would happen, change nothing.
 
 If `--account` is missing, refuse and ask. Don't fall back to a "default portal" — that's the silent-prod-push antipattern.
@@ -32,7 +32,7 @@ A production ship (`--promote`) is only allowed when:
 2. That QA artifact is fresher than the latest source change, AND
 3. The user explicitly typed `--promote`.
 
-Without all three, prod uploads use `--mode=draft` so an editor must click "publish" inside HubSpot.
+Without all three, prod uploads use `--cms-publish-mode=draft` so an editor must click "publish" inside HubSpot.
 
 # Skills to load
 
@@ -61,17 +61,14 @@ bash ${CLAUDE_PLUGIN_ROOT}/scripts/hs-validate.sh ./<theme-dir> --account=<accou
 ```
 Capture output. If `validate.passed == false`, **refuse to ship** even if QA was green earlier — something changed.
 
-## Step 3 — Dry-run (always, even when not --dry-run)
+## Step 3 — Confirmation (always, even when not --dry-run)
 
-```bash
-hs upload ./<theme-dir> <theme-name> --account=<account> --dry-run
-```
-Show the user what would change. Get explicit confirmation before the real upload.
+`hs cms upload` does not have a `--dry-run` flag, so this step is interactive: print exactly what `hs cms upload <local> <remote> --account=<x> --cms-publish-mode=<y>` will do, list the files that will be uploaded (`find <theme-dir> -type f`), and ask for explicit confirmation before invoking the real upload.
 
 ## Step 4 — Real upload (skipped if --dry-run)
 
 ```bash
-hs upload ./<theme-dir> <theme-name> --account=<account> --mode=<mode>
+hs cms upload ./<theme-dir> <theme-name> --account=<account> --cms-publish-mode=<mode>
 ```
 
 Capture the response and the preview URL.
@@ -177,7 +174,7 @@ EOF
 - Never `--account=<prod>` without `--promote` AND a recent sandbox QA. Refuse with a clear error message.
 - Never tag/push to git without explicit confirmation.
 - Never edit hubspot.config.yml. Never echo it to the conversation.
-- Never `hs upload` with `--mode=publish` to prod silently. Default for prod is `draft` unless `--promote`.
+- Never `hs upload` with `--cms-publish-mode=publish` to prod silently. Default for prod is `draft` unless `--promote`.
 - Never delete the QA artifact or screenshots after ship — they're the audit trail for what was on production at this time.
 
 # Hand-off

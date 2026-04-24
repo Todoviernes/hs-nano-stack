@@ -48,7 +48,7 @@ my-theme/
     └── footer.html
 ```
 
-**Required at the theme root:** `theme.json`, `fields.json`, `thumbnail.png`. Everything else is conventional but `hs theme validate` will warn or block on missing pieces depending on marketplace rules.
+**Required at the theme root:** `theme.json`, `fields.json`, `thumbnail.png`. Everything else is conventional but `scripts/hs-validate.sh (and post-upload, hs cms theme marketplace-validate)` will warn or block on missing pieces depending on marketplace rules.
 
 ## `theme.json` shape
 

@@ -116,6 +116,8 @@ Once the sandbox exists, run `hs auth` again and add it as a portal named `sandb
 
 ## 7. Common commands
 
+> CLI 7.x uses the `hs cms ...` subtree. The older `hs upload` / `hs watch` / `hs theme` forms still work as **deprecated aliases** — they print a warning and run the new code. Prefer the `hs cms` form below.
+
 ```bash
 # List portals
 hs accounts list
@@ -123,27 +125,29 @@ hs accounts list
 # Use a portal
 hs accounts use sandbox
 
-# Validate a theme directory
-hs theme validate ./my-theme
+# Local-only schema check (NO portal needed) — layer 1 of the validator
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/hs-validate.sh ./my-theme
 
 # Watch + auto-upload (dev loop)
-hs watch ./my-theme my-theme --account=sandbox
+hs cms watch ./my-theme my-theme --account=sandbox
 
 # Single upload
-hs upload ./my-theme my-theme --account=sandbox
-
-# Dry-run upload (preview the diff, don't change anything)
-hs upload ./my-theme my-theme --account=sandbox --dry-run
+hs cms upload ./my-theme my-theme --account=sandbox
 
 # Pull a theme/file from a portal to local
-hs fetch my-theme ./my-theme --account=sandbox
+hs cms fetch my-theme ./my-theme --account=sandbox
 
-# Local theme preview server
-hs theme preview ./my-theme --account=sandbox
+# Local theme preview server (talks to portal for content)
+hs cms theme preview --src=./my-theme --account=sandbox
 
 # Upload a single file
-hs upload ./my-theme/templates/landing.html my-theme/templates/landing.html --account=sandbox
+hs cms upload ./my-theme/templates/landing.html my-theme/templates/landing.html --account=sandbox
+
+# Marketplace-validate (requires the theme to ALREADY be uploaded)
+hs cms theme marketplace-validate my-theme --account=sandbox
 ```
+
+> **No `--dry-run` on `hs cms upload`.** The CLI doesn't expose one. Pre-upload sanity checks live in `scripts/hs-validate.sh` (layer 1 — local). The portal-side validator runs only after upload (layer 2).
 
 ## 8. Troubleshooting
 
@@ -154,7 +158,7 @@ hs upload ./my-theme/templates/landing.html my-theme/templates/landing.html --ac
 | `Invalid Personal Access Key` | Regenerate in HubSpot Settings → Integrations → Private Apps. |
 | `Theme not found` | First upload uses any name; subsequent uploads must match. |
 | `Network timeout` | Increase `httpTimeout` in `hubspot.config.yml`; check VPN. |
-| `theme.json schema invalid` | `hs theme validate` for the precise error. |
+| `theme.json schema invalid` | `bash ${CLAUDE_PLUGIN_ROOT}/scripts/hs-validate.sh ./my-theme` for the precise error. |
 | `Cannot read property of undefined` (cli crash) | `npm i -g @hubspot/cli@latest` to upgrade; report on the [HubSpot CLI repo](https://github.com/HubSpot/hubspot-cli/issues). |
 | Slow watch | The watch is per-file; large themes take a few seconds per save. Acceptable. |
 | Permissions error on upload | Your PAK was issued by a user without Design Manager write permission. Regenerate with a privileged user. |
