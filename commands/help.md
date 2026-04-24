@@ -50,7 +50,7 @@ Plus:
 ## HubSpot CLI
 
 ```bash
-npm install -g @hubspot/cli@latest
+npm install -g @hubspot/cli@latest    # 8.2.0+ required for MCP
 hs init                       # one-time auth, writes hubspot.config.yml
 hs accounts list              # see configured portals
 hs accounts use sandbox       # set default
@@ -59,6 +59,16 @@ hs accounts use sandbox       # set default
 `hubspot.config.yml` is gitignored automatically — never commit it.
 
 Full setup guide: `reference/setup-hs-cli.md`.
+
+## HubSpot Developer MCP (optional, recommended)
+
+```bash
+hs mcp setup --client claude  # one-time, then restart Claude Code
+```
+
+After setup, `mcp__hubspot__*` tools are available — most useful: `search-docs`, `fetch-doc`, `create-test-account`. Phases use them when present and fall back to shell otherwise.
+
+Full guide: `docs/MCP-SETUP.md`. Tool catalog: `skills/hubspot-mcp/SKILL.md`.
 
 ## Versioning + branching
 

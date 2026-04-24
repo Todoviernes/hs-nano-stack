@@ -18,6 +18,7 @@ You are running the `/hsns:review` phase of the **hs-nano-stack** workflow. You 
 - `hubspot-templates` — templateType correctness.
 - `hubspot-conversion` — for `target: landing-page`, brand-voice + conversion-flow review.
 - `hubspot-email` — for `target: email`.
+- `hubspot-mcp` — when in doubt about a HubL feature, use `mcp__hubspot__fetch-doc` to consult the authoritative HubSpot docs before flagging it.
 
 # Your job
 

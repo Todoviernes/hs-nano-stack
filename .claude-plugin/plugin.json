@@ -1,7 +1,7 @@
 {
   "name": "hsns",
-  "version": "0.1.0",
-  "description": "HubSpot/HubL nano-stack — phase-gated AI workflow for building CMS Hub themes, landing pages, modules, and email templates with vanilla HubL + CSS variables.",
+  "version": "0.2.0",
+  "description": "HubSpot/HubL nano-stack — phase-gated AI workflow for building CMS Hub themes, landing pages, modules, and email templates with vanilla HubL + CSS variables. Optional HubSpot Developer MCP integration.",
   "author": {
     "name": "Santiago Vallejo",
     "email": "santiagovallejoc@gmail.com"
@@ -16,6 +16,7 @@
     "modules",
     "email-templates",
     "nanostack",
-    "phase-gated"
+    "phase-gated",
+    "mcp"
   ]
 }

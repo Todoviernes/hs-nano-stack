@@ -25,16 +25,20 @@ Plus: `/hsns:feature` (additive change, skips `/think`), `/hsns:help` (one-pager
 ## Install
 
 ```bash
-# 1. Install the HubSpot CLI globally
+# 1. Install the HubSpot CLI globally (8.2.0+ for MCP support)
 npm install -g @hubspot/cli@latest
+hs --version  # expect >= 8.2.0
 
-# 2. Install this plugin (one of):
-#    a) Symlink from a checkout
-ln -s "$(pwd)" ~/.claude/plugins/hsns
+# 2. Install this plugin via local marketplace
+claude plugins marketplace add /path/to/hs-nano-stack
+claude plugins install hsns@hs-nano-stack
 
-#    b) Or via Claude Code's plugin command
-claude plugins install /path/to/hs-nano-stack
+# 3. (Optional, recommended) Wire HubSpot's Developer MCP into Claude Code
+hs mcp setup --client claude
+# Restart Claude Code afterward.
 ```
+
+The MCP install adds 19 HubSpot tools (`search-docs`, `fetch-doc`, `create-test-account`, `create-cms-module`, etc.) that the phases use opportunistically. See `docs/MCP-SETUP.md`.
 
 ## Quickstart
 
@@ -59,7 +63,7 @@ git init
 2. **Change requests, not silent edits.** When a phase needs to change the spec, it writes `.hs-nano/change-requests/<TS>.json` and asks you. On approval, a new versioned artifact is written; the old one is marked `superseded_by`.
 3. **ADR log.** Non-trivial decisions land in `.hs-nano/decisions/NNNN-slug.md`. Every command reads them before generating, so prior choices survive across sessions.
 4. **Schema-grounded scaffolds.** `fields.json` keys and `{{ module.<key> }}` references are diffed by `scripts/fields-schema-check.sh`. Mismatch fails review.
-5. **No memorized HubL.** When in doubt about a filter or field type, the agent looks up `reference/hubl-cheatsheet.md` and `reference/artifact-schema.md` rather than guessing.
+5. **No memorized HubL.** When in doubt about a filter or field type, the agent uses `mcp__hubspot__search-docs` / `mcp__hubspot__fetch-doc` (when MCP is installed) or falls back to `reference/hubl-cheatsheet.md` and `reference/artifact-schema.md` — never guesses from training data.
 
 ## Setup the HubSpot CLI
 

@@ -18,8 +18,18 @@ Use the Skill tool to load (in order):
 - `hubspot-templates` — for templateType + dnd_area decisions
 - `hubspot-fields-schema` — for field-type catalog
 - `hubl-syntax` — for HubL footguns to anticipate
+- `hubspot-mcp` — for the MCP tool catalog and decision tree
 
 If the brief's `target` is `email`, also load `hubspot-email`. If `landing-page`, also load `hubspot-conversion`.
+
+## HubSpot MCP (optional, prefer when available)
+
+If `mcp__hubspot__search-docs` is available in this session, use it to confirm:
+- Current `fields.json` field-type catalog (e.g., "HubSpot module fields.json color field shape").
+- Current `host_template_types` enum (HubSpot occasionally adds new template types).
+- Drag-drop area + section semantics.
+
+Use `mcp__hubspot__fetch-doc` on the URLs `search-docs` returns to read full pages. Prefer authoritative docs over training data when picking module shapes. Fall back to skill knowledge if MCP isn't installed.
 
 # Your job in this phase
 

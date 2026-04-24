@@ -14,6 +14,10 @@ Before doing anything else, read the loop's prior state. Use `${CLAUDE_PLUGIN_RO
 
 If `.hs-nano/` doesn't exist yet, run `bash ${CLAUDE_PLUGIN_ROOT}/scripts/init-project.sh` first to bootstrap the loop. Confirm with the user before writing anything.
 
+## HubSpot MCP (optional, prefer when available)
+
+If `mcp__hubspot__search-docs` is available in this session, use it to confirm current HubSpot best practices for the brief's `traffic_source` and `target` (e.g., "best practices for HubSpot landing pages from paid LinkedIn 2026"). Avoid guessing from training data. Fall back to skill knowledge if MCP isn't installed. Setup: `docs/MCP-SETUP.md`.
+
 # Your job in this phase
 
 Challenge the user's scope. Don't just record what they ask for — **push back**. Specifically:

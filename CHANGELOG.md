@@ -4,6 +4,29 @@ All notable changes to this plugin are documented here. Format follows [Keep a C
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-04-24
+
+### Added
+
+- HubSpot Developer MCP integration (opt-in, user-side via `hs mcp setup --client claude`).
+- New skill `skills/hubspot-mcp/SKILL.md` cataloging all 19 HubSpot MCP tools (documentation, projects, account, CMS) with the right-phase-to-use-from decision tree.
+- `docs/MCP-SETUP.md` — one-page setup + verification + troubleshooting guide.
+- Opportunistic MCP wiring in `/hsns:think`, `/hsns:nano`, `/hsns:build`, `/hsns:review`: prefer `mcp__hubspot__search-docs` / `mcp__hubspot__fetch-doc` over training-data lookups; offer `mcp__hubspot__create-cms-module` / `create-cms-template` as an alternative scaffold path for React modules or canonical-pattern requests; `mcp__hubspot__create-test-account` for one-command sandbox provisioning.
+- README "Install" section now documents the optional MCP setup as the recommended third install step.
+
+### Changed
+
+- HubSpot CLI requirement bumped to **8.2.0+** (required for `hs mcp setup`). Earlier 7.x still works for everything except the MCP integration.
+- `hs theme validate` references replaced with `scripts/hs-validate.sh` (two-layer validator: local schema + opt-in portal-side `hs cms theme marketplace-validate`). The CLI never had a `hs theme validate <local-dir>` command; v0.1 docs implied one.
+- `hs upload` / `--mode=` references replaced with modern `hs cms upload` / `--cms-publish-mode=`.
+
+### Fixed
+
+- `agents/hs-conversion-reviewer.md` YAML frontmatter parse error (colon-space inside backticks). The agent now loads with full metadata; previously it loaded with empty frontmatter (caught by the official `claude plugins validate`).
+- `scripts/hubl-lint.sh` no longer dies silently on `set -euo pipefail` + `grep` no-matches; rewritten with safer command substitution.
+- `scripts/fields-schema-check.sh` now uses POSIX-friendly regex (BSD/macOS `sed` doesn't grok `\b`).
+- `.claude-plugin/marketplace.json` schema corrected (the validator rejects root-level `$schema` and `description`).
+
 ## [0.1.0] — 2026-04-24
 
 ### Added

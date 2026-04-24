@@ -22,6 +22,19 @@ Before writing any HubL, load (Skill tool):
 - For `target: email`: also `hubspot-email`.
 - For `target: landing-page`: also `hubspot-conversion`, `hubspot-performance`.
 
+## Two scaffolding paths (recipe vs MCP)
+
+For each `module_map` entry, pick a path:
+
+- **Recipe path (default):** copy from `reference/module-recipes/<recipe>.html`, adapt copy to `content_schema`, swap colors to `var(--color-*)`. Deterministic, brand-voiced, reviewable in PR diffs.
+- **MCP path:** if available, `mcp__hubspot__create-cms-module` produces HubSpot's canonical module starter. Use when:
+  - The brief asks for a **React module** (recipes are HubL-only).
+  - No recipe matches and you'd otherwise hand-author from scratch.
+  - The user explicitly asks for "the canonical HubSpot pattern."
+- For templates: `mcp__hubspot__create-cms-template` is the equivalent. Same rules.
+
+Whichever path, the post-scaffold validation is identical: `fields-schema-check.sh` + `hubl-lint.sh`.
+
 # Your job
 
 Walk the plan's `files_planned` array. For each file:
