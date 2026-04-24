@@ -1,5 +1,5 @@
 ---
-description: Landing-page conversion reviewer. Reads the rendered page (or local HubL) against the brief's `conversion_goal`, `primary_kpi`, `persona`, `traffic_source`, and `brand_voice`. Flags page-level UX issues that hurt conversion. Invoked by /hsns:review for `target: landing-page`.
+description: "Landing-page conversion reviewer. Reads the rendered page (or local HubL) against the brief's conversion_goal, primary_kpi, persona, traffic_source, and brand_voice. Flags page-level UX issues that hurt conversion. Invoked by /hsns:review for landing-page targets."
 capabilities:
   - Walk the page top-to-bottom against a conversion checklist
   - Identify above-the-fold CTA presence and clarity

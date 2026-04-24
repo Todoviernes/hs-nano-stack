@@ -1,0 +1,37 @@
+name: smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify jq present
+        run: jq --version
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install HubSpot CLI
+        run: npm install -g @hubspot/cli@latest
+
+      - name: Verify hs is on PATH
+        run: hs --version
+
+      - name: Run smoke test (20 layers, no portal needed)
+        run: bash tests/smoke.sh
