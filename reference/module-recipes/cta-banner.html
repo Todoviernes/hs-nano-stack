@@ -1,0 +1,75 @@
+{# RECIPE: cta-banner #}
+{# Full-width banner with one headline + one CTA. Used for risk-reversal or end-of-page conversion. #}
+{# fields.json:
+
+[
+  { "name": "headline", "label": "Headline", "type": "text", "required": true,
+    "default": "Ready to ship better landings?" },
+  { "name": "subhead", "label": "Sub-headline", "type": "text",
+    "default": "Phase-gated workflow. Sandbox-first deploys." },
+  { "name": "cta", "label": "Primary CTA", "type": "group", "expanded": true, "children": [
+    { "name": "label", "label": "Label", "type": "text", "default": "Get a demo" },
+    { "name": "url",   "label": "URL",   "type": "url",
+      "default": { "href": "/demo", "type": "EXTERNAL" } }
+  ]},
+  { "name": "background_color", "label": "Background", "type": "color",
+    "default": { "color": "#0F172A", "opacity": 100 } },
+  { "name": "text_color", "label": "Text color", "type": "color",
+    "default": { "color": "#FFFFFF", "opacity": 100 } }
+]
+
+#}
+
+<section class="cta-banner"
+         style="background: {{ module.background_color.color }}; color: {{ module.text_color.color }};">
+  <div class="cta-banner__inner">
+    <div class="cta-banner__copy">
+      <h2 class="cta-banner__headline">{{ module.headline }}</h2>
+      {% if module.subhead %}
+        <p class="cta-banner__subhead">{{ module.subhead }}</p>
+      {% endif %}
+    </div>
+    {% if module.cta.url.href and module.cta.label %}
+      <a class="cta-banner__cta"
+         href="{{ module.cta.url.href|escape }}"
+         {% if module.cta.url.type == "EXTERNAL" %}target="_blank" rel="noopener"{% endif %}>
+        {{ module.cta.label }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% require_css %}
+<style>
+  .cta-banner { padding: 4rem 1.5rem; }
+  .cta-banner__inner {
+    max-width: var(--max-width, 1200px);
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .cta-banner__headline {
+    font-family: var(--font-heading), serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.2;
+    margin: 0 0 0.5rem;
+  }
+  .cta-banner__subhead { margin: 0; font-size: 1.0625rem; opacity: 0.85; }
+  .cta-banner__cta {
+    display: inline-block;
+    padding: 0.875rem 1.75rem;
+    background: white;
+    color: var(--color-primary, #0F172A);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  @media (max-width: 767px) {
+    .cta-banner__cta { width: 100%; text-align: center; }
+  }
+</style>
+{% end_require_css %}

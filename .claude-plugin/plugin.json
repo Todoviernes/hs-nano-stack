@@ -1,0 +1,21 @@
+{
+  "name": "hsns",
+  "version": "0.1.0",
+  "description": "HubSpot/HubL nano-stack — phase-gated AI workflow for building CMS Hub themes, landing pages, modules, and email templates with vanilla HubL + CSS variables.",
+  "author": {
+    "name": "Santiago Vallejo",
+    "email": "santiagovallejoc@gmail.com"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "hubspot",
+    "hubl",
+    "cms-hub",
+    "landing-pages",
+    "themes",
+    "modules",
+    "email-templates",
+    "nanostack",
+    "phase-gated"
+  ]
+}

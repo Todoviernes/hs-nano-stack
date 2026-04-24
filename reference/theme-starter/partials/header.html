@@ -1,0 +1,40 @@
+<header class="site-header" role="banner">
+  <div class="site-header__inner">
+    <a href="{{ site_settings.companyDomain|default('/') }}" class="site-header__logo" aria-label="{{ site_settings.companyName|default('Home') }}">
+      {% if theme.logo.src %}
+        <img src="{{ theme.logo.src }}"
+             alt="{{ theme.logo.alt|default(site_settings.companyName) }}"
+             width="120" height="32"
+             loading="eager" decoding="async">
+      {% else %}
+        <span class="site-header__company">{{ site_settings.companyName|default('Company') }}</span>
+      {% endif %}
+    </a>
+    <nav class="site-header__nav" aria-label="Primary">
+      {% menu name="primary_navigation" tree_type="static" root_type="site_root" %}
+    </nav>
+  </div>
+</header>
+
+{% require_css %}
+<style>
+  .site-header { background: var(--color-bg, #FFFFFF); border-bottom: 1px solid color-mix(in srgb, var(--color-text, #0F172A) 8%, transparent); }
+  .site-header__inner {
+    max-width: var(--max-width, 1200px);
+    margin-inline: auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .site-header__company { font-family: var(--font-heading, serif); font-size: 1.125rem; font-weight: 700; color: var(--color-text, #0F172A); }
+  .site-header__nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 1.5rem; }
+  .site-header__nav a { color: var(--color-text, #0F172A); text-decoration: none; font-weight: 500; }
+  .site-header__nav a:hover { color: var(--color-primary, #0F172A); }
+
+  @media (max-width: 767px) {
+    .site-header__nav ul { gap: 0.875rem; flex-wrap: wrap; }
+  }
+</style>
+{% end_require_css %}

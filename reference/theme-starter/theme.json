@@ -1,0 +1,13 @@
+{
+  "label": "hsns Starter Theme",
+  "preview_path": "./templates/landing.html",
+  "screenshot_path": "./images/screenshot.png",
+  "enable_domain_stylesheets": false,
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "responsive_breakpoints": [
+    { "name": "mobile",  "mediaQuery": "(max-width: 767px)" },
+    { "name": "tablet",  "mediaQuery": "(min-width: 768px) and (max-width: 1023px)" },
+    { "name": "desktop", "mediaQuery": "(min-width: 1024px)" }
+  ]
+}

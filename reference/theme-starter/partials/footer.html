@@ -1,0 +1,39 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner">
+    <p class="site-footer__copy">
+      &copy; {{ unixtimestamp()|datetimeformat('%Y') }} {{ site_settings.companyName|default('Company') }}. All rights reserved.
+    </p>
+    <nav class="site-footer__nav" aria-label="Footer">
+      {% menu name="footer_navigation" tree_type="static" root_type="site_root" %}
+    </nav>
+  </div>
+</footer>
+
+{% require_css %}
+<style>
+  .site-footer {
+    background: var(--color-bg-alt, #F8FAFC);
+    border-top: 1px solid color-mix(in srgb, var(--color-text, #0F172A) 8%, transparent);
+    padding: 2rem 0;
+    color: var(--color-muted, #475569);
+  }
+  .site-footer__inner {
+    max-width: var(--max-width, 1200px);
+    margin-inline: auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .site-footer__copy { font-size: 0.875rem; margin: 0; }
+  .site-footer__nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 1.25rem; }
+  .site-footer__nav a { color: var(--color-muted, #475569); text-decoration: none; font-size: 0.875rem; }
+  .site-footer__nav a:hover { color: var(--color-primary, #0F172A); }
+
+  @media (max-width: 767px) {
+    .site-footer__inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+{% end_require_css %}

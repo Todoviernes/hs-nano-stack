@@ -1,0 +1,139 @@
+{# RECIPE: feature-grid #}
+{# Three-column feature grid. Editor adds 1-12 feature cards via repeater. Mobile stacks. #}
+{# fields.json:
+
+[
+  { "name": "section_headline", "label": "Section headline", "type": "text",
+    "default": "Everything you need to ship CMS Hub work" },
+  { "name": "section_subhead", "label": "Section sub-headline", "type": "text",
+    "default": "" },
+  { "name": "features", "label": "Features", "type": "group",
+    "occurrence": { "min": 1, "max": 12, "default": 3, "sorting_label_field": "headline" },
+    "children": [
+      { "name": "icon", "label": "Icon", "type": "icon",
+        "default": { "name": "rocket", "type": "SOLID", "unicode": "f135" } },
+      { "name": "headline", "label": "Headline", "type": "text", "required": true,
+        "default": "Phase gates" },
+      { "name": "body", "label": "Body", "type": "richtext",
+        "default": "<p>Review, security, QA before any portal touches.</p>" }
+    ]
+  }
+]
+
+#}
+{# meta.json:
+
+{
+  "label": "Feature grid",
+  "css_assets": [],
+  "external_js": [],
+  "global": false,
+  "help_text": "Three-column feature grid; editor adds 1-12 cards.",
+  "host_template_types": ["PAGE", "LANDING_PAGE", "BLOG_POST"],
+  "is_available_for_new_content": true,
+  "smart_type": "NOT_SMART",
+  "type": "module",
+  "version": 1,
+  "tags": ["features", "differentiators"]
+}
+
+#}
+
+<section class="feature-grid" aria-labelledby="feature-grid-{{ name }}-headline">
+  <div class="feature-grid__intro">
+    <h2 id="feature-grid-{{ name }}-headline" class="feature-grid__headline">
+      {{ module.section_headline }}
+    </h2>
+    {% if module.section_subhead %}
+      <p class="feature-grid__subhead">{{ module.section_subhead }}</p>
+    {% endif %}
+  </div>
+
+  <div class="feature-grid__items">
+    {% for feature in module.features %}
+      <article class="feature">
+        {% if feature.icon.name %}
+          <div class="feature__icon" aria-hidden="true">
+            <i class="fas fa-{{ feature.icon.name|escape }}"></i>
+          </div>
+        {% endif %}
+        <h3 class="feature__headline">{{ feature.headline }}</h3>
+        <div class="feature__body">{{ feature.body }}</div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+{% require_css %}
+<style>
+  .feature-grid {
+    max-width: var(--max-width, 1200px);
+    margin-inline: auto;
+    padding: 4rem 1.5rem;
+  }
+
+  .feature-grid__intro {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .feature-grid__headline {
+    font-family: var(--font-heading), serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.2;
+    color: var(--color-text, #0F172A);
+    margin: 0 0 0.5rem;
+  }
+
+  .feature-grid__subhead {
+    color: var(--color-text, #475569);
+    font-size: 1.125rem;
+    margin: 0 auto;
+    max-width: 42rem;
+  }
+
+  .feature-grid__items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .feature {
+    text-align: left;
+  }
+
+  .feature__icon {
+    width: 3rem;
+    height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--color-primary, #0F172A) 10%, transparent);
+    color: var(--color-primary, #0F172A);
+    border-radius: 0.75rem;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature__headline {
+    font-family: var(--font-heading), serif;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    color: var(--color-text, #0F172A);
+    margin: 0 0 0.5rem;
+  }
+
+  .feature__body {
+    color: var(--color-text, #475569);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 1023px) {
+    .feature-grid__items { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 767px) {
+    .feature-grid { padding: 3rem 1.25rem; }
+    .feature-grid__items { grid-template-columns: 1fr; gap: 1.75rem; }
+  }
+</style>
+{% end_require_css %}

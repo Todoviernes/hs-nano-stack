@@ -1,0 +1,132 @@
+{# RECIPE: form-stack #}
+{# Vertical stack: headline + subhead + HubSpot form embed. Used as the bottom-of-page lead capture. #}
+{# fields.json:
+
+[
+  { "name": "form_headline", "label": "Form headline", "type": "text", "required": true,
+    "default": "Get a demo" },
+  { "name": "form_subhead", "label": "Form sub-headline", "type": "richtext",
+    "default": "<p>See your first deployed flow in under 10 minutes.</p>" },
+  { "name": "form", "label": "HubSpot form", "type": "form",
+    "default": {
+      "form_id": "",
+      "response_type": "redirect",
+      "redirect_url": "/thanks",
+      "message": "Thanks — we'll be in touch."
+    }
+  },
+  { "name": "consent_copy", "label": "Consent / privacy line", "type": "richtext",
+    "default": "<p>By submitting you agree to our <a href=\"/privacy\">privacy policy</a>.</p>" }
+]
+
+#}
+
+<section class="form-stack" aria-labelledby="form-stack-{{ name }}-headline">
+  <div class="form-stack__copy">
+    <h2 id="form-stack-{{ name }}-headline" class="form-stack__headline">
+      {{ module.form_headline }}
+    </h2>
+    {% if module.form_subhead %}
+      <div class="form-stack__subhead">{{ module.form_subhead }}</div>
+    {% endif %}
+  </div>
+
+  <div class="form-stack__form-wrapper">
+    {% if module.form.form_id %}
+      {% form
+         form_to_use="{{ module.form.form_id }}"
+         response_response_type="{{ module.form.response_type|default('redirect') }}"
+         response_redirect_url="{{ module.form.redirect_url|default('/thanks') }}"
+         response_message="{{ module.form.message|default('Thanks — we will be in touch.') }}"
+      %}
+    {% else %}
+      <p class="form-stack__placeholder">
+        Pick a HubSpot form in the editor's <em>HubSpot form</em> field.
+      </p>
+    {% endif %}
+  </div>
+
+  {% if module.consent_copy %}
+    <div class="form-stack__consent">{{ module.consent_copy }}</div>
+  {% endif %}
+</section>
+
+{% require_css %}
+<style>
+  .form-stack {
+    max-width: 36rem;
+    margin-inline: auto;
+    padding: 4rem 1.5rem;
+  }
+
+  .form-stack__copy { text-align: center; margin-bottom: 2rem; }
+
+  .form-stack__headline {
+    font-family: var(--font-heading), serif;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    line-height: 1.2;
+    margin: 0 0 0.5rem;
+    color: var(--color-text, #0F172A);
+  }
+
+  .form-stack__subhead {
+    color: var(--color-text, #475569);
+    font-size: 1.0625rem;
+  }
+
+  .form-stack__form-wrapper {
+    background: white;
+    border: 1px solid color-mix(in srgb, var(--color-text, #0F172A) 10%, transparent);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .form-stack__consent {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text, #94A3B8);
+    text-align: center;
+  }
+
+  /* HubSpot form embed reset (preserve a11y) */
+  .form-stack__form-wrapper .hs-form-field { margin-bottom: 1rem; }
+  .form-stack__form-wrapper .hs-form-field label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.375rem;
+    color: var(--color-text, #0F172A);
+  }
+  .form-stack__form-wrapper .hs-input,
+  .form-stack__form-wrapper textarea.hs-input,
+  .form-stack__form-wrapper select.hs-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.4;
+    border: 1px solid #CBD5E1;
+    border-radius: 0.375rem;
+    background: white;
+    color: var(--color-text, #0F172A);
+  }
+  .form-stack__form-wrapper .hs-input:focus,
+  .form-stack__form-wrapper textarea.hs-input:focus,
+  .form-stack__form-wrapper select.hs-input:focus {
+    outline: 2px solid var(--color-primary, #0F172A);
+    outline-offset: 2px;
+    border-color: var(--color-primary, #0F172A);
+  }
+  .form-stack__form-wrapper .hs-button {
+    display: inline-block;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    background: var(--color-primary, #0F172A);
+    color: white;
+    border: 0;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .form-stack__form-wrapper .hs-error-msgs label { color: #DC2626; font-size: 0.875rem; }
+</style>
+{% end_require_css %}

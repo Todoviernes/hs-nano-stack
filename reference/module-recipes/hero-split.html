@@ -1,0 +1,163 @@
+{# RECIPE: hero-split #}
+{# Two-column hero: copy on the left, image on the right. Single primary CTA. Mobile stacks vertically. #}
+{# fields.json (companion file in the same .module directory):
+
+[
+  { "name": "headline", "label": "Headline", "type": "text", "required": true,
+    "default": "Build CMS Hub work that actually converts" },
+  { "name": "subhead", "label": "Sub-headline", "type": "richtext",
+    "default": "<p>Phase-gated AI workflow for HubSpot CMS Hub. Built for ops managers.</p>" },
+  { "name": "image", "label": "Hero image", "type": "image", "responsive": true,
+    "default": { "src": "", "alt": "" } },
+  { "name": "cta", "label": "Primary CTA", "type": "group", "expanded": true, "children": [
+    { "name": "label", "label": "Label", "type": "text", "default": "Get a demo" },
+    { "name": "url",   "label": "URL",   "type": "url",
+      "default": { "href": "/demo", "type": "EXTERNAL" },
+      "supported_types": ["EXTERNAL", "CONTENT", "FILE", "EMAIL_ADDRESS"] }
+  ]},
+  { "name": "trust_logos", "label": "Trust logos", "type": "group",
+    "occurrence": { "min": 0, "max": 8, "default": 0 },
+    "children": [
+      { "name": "logo", "label": "Logo", "type": "image", "default": { "src": "", "alt": "" } },
+      { "name": "name", "label": "Company name", "type": "text", "default": "" }
+    ]
+  }
+]
+
+#}
+{# meta.json (companion):
+
+{
+  "label": "Hero — split layout",
+  "css_assets": [],
+  "external_js": [],
+  "global": false,
+  "help_text": "Two-column hero with headline, subhead, image, and CTA.",
+  "host_template_types": ["PAGE", "LANDING_PAGE", "BLOG_POST"],
+  "module_id": null,
+  "is_available_for_new_content": true,
+  "smart_type": "NOT_SMART",
+  "type": "module",
+  "version": 1,
+  "tags": ["hero", "landing"]
+}
+
+#}
+
+<section class="hero-split" aria-labelledby="hero-split-{{ name }}-headline">
+  <div class="hero-split__copy">
+    <h1 id="hero-split-{{ name }}-headline" class="hero-split__headline">{{ module.headline }}</h1>
+    {% if module.subhead %}
+      <div class="hero-split__subhead">{{ module.subhead }}</div>
+    {% endif %}
+
+    {% if module.cta.url.href and module.cta.label %}
+      <a class="hero-split__cta btn btn--primary"
+         href="{{ module.cta.url.href|escape }}"
+         {% if module.cta.url.type == "EXTERNAL" %}target="_blank" rel="noopener"{% endif %}>
+        {{ module.cta.label }}
+      </a>
+    {% endif %}
+
+    {% if module.trust_logos|length > 0 %}
+      <ul class="hero-split__trust" aria-label="Trusted by">
+        {% for logo in module.trust_logos %}
+          {% if logo.logo.src %}
+            <li class="hero-split__trust-item">
+              <img src="{{ logo.logo.src }}"
+                   alt="{{ logo.logo.alt|default(logo.name) }}"
+                   loading="lazy" decoding="async"
+                   width="120" height="32">
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+  {% if module.image.src %}
+    <div class="hero-split__media">
+      <img src="{{ module.image.src }}"
+           alt="{{ module.image.alt }}"
+           {% if module.image.width %}width="{{ module.image.width }}"{% endif %}
+           {% if module.image.height %}height="{{ module.image.height }}"{% endif %}
+           loading="eager" fetchpriority="high" decoding="async">
+    </div>
+  {% endif %}
+</section>
+
+{% require_css %}
+<style>
+  .hero-split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: var(--max-width, 1200px);
+    margin-inline: auto;
+    padding: 4rem 1.5rem;
+  }
+
+  .hero-split__headline {
+    font-family: var(--font-heading), serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    color: var(--color-text, #0F172A);
+    margin: 0 0 1rem;
+  }
+
+  .hero-split__subhead {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text, #475569);
+    margin: 0 0 2rem;
+    max-width: 36rem;
+  }
+
+  .hero-split__cta {
+    display: inline-block;
+    padding: 0.875rem 1.75rem;
+    background: var(--color-primary, #0F172A);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 120ms ease;
+  }
+
+  .hero-split__cta:hover { transform: translateY(-1px); }
+  .hero-split__cta:focus-visible {
+    outline: 2px solid var(--color-primary, #0F172A);
+    outline-offset: 3px;
+  }
+
+  .hero-split__trust {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    opacity: 0.7;
+  }
+
+  .hero-split__trust-item img { display: block; }
+
+  .hero-split__media img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+  }
+
+  @media (max-width: 767px) {
+    .hero-split {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2.5rem 1.25rem;
+    }
+    .hero-split__cta { width: 100%; text-align: center; }
+  }
+</style>
+{% end_require_css %}

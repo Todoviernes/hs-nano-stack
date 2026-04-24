@@ -1,0 +1,33 @@
+<!--
+  templateType: page
+  label: Page — flexible
+  screenshotPath: ../images/page-screenshot.png
+  isAvailableForNewContent: true
+-->
+<!doctype html>
+<html lang="{{ html_lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ content.html_title }}</title>
+  <meta name="description" content="{{ content.meta_description }}">
+  <link rel="canonical" href="{{ content.absolute_url|safe }}">
+
+  {{ standard_header_includes }}
+</head>
+<body class="hs-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  {% global_partial path="../partials/header.html" %}
+
+  <main id="main-content">
+    {% dnd_area "main_content" label="Page content" %}{% end_dnd_area %}
+  </main>
+
+  {% global_partial path="../partials/footer.html" %}
+
+  {{ standard_footer_includes }}
+</body>
+</html>

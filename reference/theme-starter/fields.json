@@ -1,0 +1,34 @@
+[
+  {
+    "name": "colors",
+    "label": "Colors",
+    "type": "group",
+    "expanded": true,
+    "children": [
+      { "name": "primary",   "label": "Primary",   "type": "color", "default": { "color": "#0F172A", "opacity": 100 } },
+      { "name": "secondary", "label": "Secondary", "type": "color", "default": { "color": "#3B82F6", "opacity": 100 } },
+      { "name": "text",      "label": "Body text", "type": "color", "default": { "color": "#0F172A", "opacity": 100 } },
+      { "name": "muted",     "label": "Muted text", "type": "color", "default": { "color": "#475569", "opacity": 100 } },
+      { "name": "bg",        "label": "Background", "type": "color", "default": { "color": "#FFFFFF", "opacity": 100 } },
+      { "name": "bg_alt",    "label": "Background — alternate", "type": "color", "default": { "color": "#F8FAFC", "opacity": 100 } }
+    ]
+  },
+  {
+    "name": "typography",
+    "label": "Typography",
+    "type": "group",
+    "expanded": false,
+    "children": [
+      { "name": "heading", "label": "Heading", "type": "font", "default": { "font": "Inter", "font_set": "GOOGLE", "size": 32, "size_unit": "px", "color": "#0F172A", "styles": { "font-weight": "700" } } },
+      { "name": "body",    "label": "Body",    "type": "font", "default": { "font": "Inter", "font_set": "GOOGLE", "size": 16, "size_unit": "px", "color": "#0F172A", "styles": { "font-weight": "400" } } }
+    ]
+  },
+  { "name": "max_width", "label": "Max content width (px)", "type": "number", "default": 1200, "min": 600, "max": 1600, "step": 20 },
+  {
+    "name": "logo",
+    "label": "Site logo",
+    "type": "image",
+    "default": { "src": "", "alt": "" },
+    "help_text": "Shown in the header. Leave empty to fall back to company name text."
+  }
+]

@@ -1,0 +1,20 @@
+# HubSpot CLI auth — NEVER commit
+hubspot.config.yml
+hubspot.config.yaml
+
+# Phase artifact cache (the typed artifacts ARE committed; only volatile cache is ignored)
+.hs-nano/artifacts/cache/
+.hs-nano/tmp/
+
+# Node / OS
+node_modules/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+
+# Editor
+.idea/
+.vscode/
+*.swp

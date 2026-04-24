@@ -1,0 +1,94 @@
+/* css/main.css — hsns starter theme. Wires theme.json fields → CSS variables. */
+
+:root {
+  --color-primary:   {{ theme.colors.primary.color }};
+  --color-secondary: {{ theme.colors.secondary.color }};
+  --color-text:      {{ theme.colors.text.color }};
+  --color-muted:     {{ theme.colors.muted.color }};
+  --color-bg:        {{ theme.colors.bg.color }};
+  --color-bg-alt:    {{ theme.colors.bg_alt.color }};
+
+  --font-heading: {{ theme.typography.heading.font }};
+  --font-body:    {{ theme.typography.body.font }};
+  --max-width:    {{ theme.max_width }}px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body), system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), serif;
+  color: var(--color-text);
+  margin: 0 0 0.5em;
+  line-height: 1.15;
+}
+
+img, picture, video { max-width: 100%; height: auto; }
+
+a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding: 8px 16px;
+  z-index: 9999;
+  border-radius: 0.25rem;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+  width: auto;
+  height: auto;
+  overflow: visible;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.875rem 1.5rem;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 0;
+  cursor: pointer;
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn--primary {
+  background: var(--color-primary);
+  color: white;
+}
+.btn--secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}

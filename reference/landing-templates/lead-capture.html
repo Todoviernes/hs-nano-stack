@@ -1,0 +1,61 @@
+<!--
+  templateType: landing-page
+  label: Lead capture — split layout
+  isAvailableForNewContent: true
+-->
+<!doctype html>
+<html lang="{{ html_lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+
+  <title>{{ content.html_title }}</title>
+  <meta name="description" content="{{ content.meta_description }}">
+
+  <link rel="canonical" href="{{ content.absolute_url|safe }}">
+
+  {# Preload hero image — bumped via the hero-split module's `module.image` field #}
+  {% if dnd_partial.main_content.module_default_hero_image %}
+    <link rel="preload" as="image" fetchpriority="high"
+          href="{{ dnd_partial.main_content.module_default_hero_image|escape }}">
+  {% endif %}
+
+  {{ standard_header_includes }}
+</head>
+<body class="hs-landing">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  {% global_partial path="../partials/header.html" %}
+
+  <main id="main-content">
+    {% dnd_area "main_content"
+       label="Page content"
+       class="page-main"
+    %}
+      {% dnd_section padding={ top: 0, bottom: 0 } %}
+        {% dnd_column %}
+          {% dnd_module path="../modules/hero-split.module" %}
+        {% end_dnd_column %}
+      {% end_dnd_section %}
+
+      {% dnd_section padding={ top: 0, bottom: 0 } background_color="#F8FAFC" %}
+        {% dnd_column %}
+          {% dnd_module path="../modules/feature-grid.module" %}
+        {% end_dnd_column %}
+      {% end_dnd_section %}
+
+      {% dnd_section padding={ top: 0, bottom: 0 } %}
+        {% dnd_column %}
+          {% dnd_module path="../modules/cta-form.module" %}
+        {% end_dnd_column %}
+      {% end_dnd_section %}
+    {% end_dnd_area %}
+  </main>
+
+  {% global_partial path="../partials/footer.html" %}
+
+  {{ standard_footer_includes }}
+</body>
+</html>

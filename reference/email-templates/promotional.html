@@ -1,0 +1,91 @@
+<!--
+  templateType: email
+  label: Promotional — single-CTA
+  isAvailableForNewContent: true
+-->
+<!doctype html>
+<html lang="{{ html_lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+  <title>{{ subject }}</title>
+  <style type="text/css">
+    body { margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background: #F8FAFC; }
+    table { border-collapse: collapse; }
+    img { display: block; border: 0; outline: none; max-width: 100%; height: auto; }
+    a { color: #3B82F6; text-decoration: underline; }
+
+    .email-container { max-width: 600px; margin: 0 auto; }
+
+    .hero-h1 { font-family: Arial, sans-serif; font-size: 28px; line-height: 1.2; color: #0F172A; margin: 0 0 12px; }
+    .body-p  { font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #475569; margin: 0 0 24px; }
+
+    .cta-button {
+      display: inline-block; padding: 14px 28px; background: #0F172A; color: #FFFFFF !important;
+      text-decoration: none; border-radius: 8px; font-family: Arial, sans-serif; font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      .email-container { width: 100% !important; }
+      .hero-h1 { font-size: 22px !important; }
+      .stack-on-mobile { width: 100% !important; display: block !important; }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body, .email-container { background: #0F172A !important; }
+      .hero-h1 { color: #F8FAFC !important; }
+      .body-p  { color: #CBD5E1 !important; }
+      .cta-button { background: #3B82F6 !important; }
+    }
+  </style>
+</head>
+<body>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation">
+    <tr><td>
+      <table class="email-container" cellpadding="0" cellspacing="0" border="0" role="presentation" width="600">
+
+        {# Preheader — hidden, used by inbox preview text #}
+        <tr><td style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px;">
+          {{ module.preheader }}
+        </td></tr>
+
+        {# Header #}
+        <tr><td style="padding: 24px 24px 16px;">
+          <a href="{{ site_settings.companyDomain|default('https://example.com') }}">
+            {% if module.logo.src %}
+              <img src="{{ module.logo.src }}" alt="{{ module.logo.alt|default(company_name) }}" width="120">
+            {% else %}
+              <span style="font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; color: #0F172A;">{{ company_name }}</span>
+            {% endif %}
+          </a>
+        </td></tr>
+
+        {# Hero #}
+        <tr><td style="padding: 24px;">
+          <h1 class="hero-h1">{{ module.headline }}</h1>
+          <div class="body-p">{{ module.body }}</div>
+          {% if module.cta_url and module.cta_label %}
+            <a href="{{ module.cta_url|escape }}" class="cta-button">{{ module.cta_label }}</a>
+          {% endif %}
+        </td></tr>
+
+        {# Footer (REQUIRED tokens) #}
+        <tr><td style="padding: 24px; border-top: 1px solid #E2E8F0; font-family: Arial, sans-serif; font-size: 12px; color: #94A3B8;">
+          <p style="margin: 0 0 8px;">
+            {{ company_name }}<br>
+            {{ company_street_address_1 }}{% if company_street_address_2 %}, {{ company_street_address_2 }}{% endif %}<br>
+            {{ company_city }}{% if company_state %}, {{ company_state }}{% endif %} {{ company_postal_code }}
+          </p>
+          <p style="margin: 0;">
+            <a href="{{ unsubscribe_link }}">Unsubscribe</a> ·
+            <a href="{{ view_as_page_url }}">View in browser</a>
+          </p>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
