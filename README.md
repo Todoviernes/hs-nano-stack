@@ -6,11 +6,45 @@ A Claude Code plugin that ports the [garagon/nanostack](https://github.com/garag
 
 > **Why.** Generalist AI agents leak in three predictable ways on HubSpot: HubL syntax mistakes, schema drift between `theme.json` / `fields.json` / `meta.json`, and skipped marketplace + Core Web Vitals gates. `hsns` solves all three with a phase chain that reads upstream artifacts and refuses to drift.
 
-## The seven commands
+## How it works at a glance
 
+```mermaid
+flowchart LR
+    T["/hsns:think"] -->|writes| TH[("think.json")]
+    TH -->|reads| N["/hsns:nano"]
+    N -->|writes| PL[("plan.json")]
+    PL -->|reads| B["/hsns:build"]
+    B -->|writes| SRC[("source files")]
+    PL -.->|drift check| R["/hsns:review"]
+    SRC -->|reads| R
+    R -->|writes| RV[("review.json")]
+    RV -->|reads| S["/hsns:security"]
+    S -->|writes| SEC[("security.json")]
+    SEC -->|reads| Q["/hsns:qa"]
+    RV -->|reads| Q
+    Q -->|writes| QA[("qa.json")]
+    QA -->|gates| SH["/hsns:ship"]
+    SEC -->|gates| SH
+    SH -->|writes| SHIP[("ship.json + journal.md")]
+
+    ADR[("ADR log<br/><i>read by every phase</i>")] -.->|context| T
+    ADR -.->|context| N
+    ADR -.->|context| B
+    ADR -.->|context| R
+
+    classDef phase fill:#0F172A,stroke:#3B82F6,color:#fff;
+    classDef art fill:#F8FAFC,stroke:#94A3B8,color:#0F172A;
+    classDef adr fill:#EEF2FF,stroke:#7C3AED,color:#0F172A;
+    class T,N,B,R,S,Q,SH phase;
+    class TH,PL,SRC,RV,SEC,QA,SHIP art;
+    class ADR adr;
 ```
-/hsns:think  →  /hsns:nano  →  /hsns:build  →  /hsns:review  →  /hsns:security  →  /hsns:qa  →  /hsns:ship
-```
+
+Once approved, every artifact is marked `frozen: true` — downstream phases must read it and produce consistent output. Spec changes go through `change-requests/`, not silent edits. Non-trivial decisions land in `decisions/NNNN-slug.md` and are read before every phase generates.
+
+📐 **Full architecture with discipline-loop and branching diagrams: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).**
+
+## The seven commands
 
 | Command | What it does | Writes |
 |---|---|---|
