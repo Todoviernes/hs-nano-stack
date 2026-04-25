@@ -19,6 +19,8 @@
         "email": "santiagovallejoc@gmail.com"
       },
       "license": "Apache-2.0",
+      "homepage": "https://github.com/Todoviernes/hs-nano-stack",
+      "repository": "https://github.com/Todoviernes/hs-nano-stack",
       "keywords": [
         "hubspot",
         "hubl",

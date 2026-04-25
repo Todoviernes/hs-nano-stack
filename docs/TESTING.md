@@ -118,17 +118,15 @@ In Claude Code, in `/tmp/hsns-e2e`:
 
 ## Continuous integration
 
-There is no CI yet. To add one, run `bash tests/smoke.sh` on every PR. The smoke test is portal-independent so it works in any GitHub Actions runner with `node`, `bash`, and `jq` installed.
+CI is configured in [`.github/workflows/smoke.yml`](../.github/workflows/smoke.yml). It runs `tests/smoke.sh` on every push to `main` and on every pull request. The workflow installs Node 20, the latest `@hubspot/cli`, and then executes the 20-layer smoke. Status is shown by the badge at the top of the README.
 
-Sample GitHub Actions step (not yet added to `.github/workflows/`):
+Locally:
 
-```yaml
-- name: Smoke test
-  run: |
-    sudo apt-get install -y jq
-    npm install -g @hubspot/cli@latest
-    bash tests/smoke.sh
+```bash
+bash tests/smoke.sh
 ```
+
+CI runs the same script, so a green local run plus a green CI run cover the same surface — modulo macOS vs. Linux behavior differences in `sed` / `bash`. If something passes locally but fails in CI, that delta is the bug.
 
 ---
 
@@ -158,10 +156,11 @@ bash scripts/resolve.sh think
 
 ## Reporting issues
 
-If a smoke layer fails on a clean checkout, capture:
+Open an issue at https://github.com/Todoviernes/hs-nano-stack/issues with:
 
 1. The exact `tests/smoke.sh` output (full).
 2. `git rev-parse HEAD` (to pin the version).
 3. `hs --version`, `node --version`, `jq --version`, `bash --version`.
+4. Whether you have the HubSpot Developer MCP installed (`hs mcp setup --client claude`).
 
-Open an issue with that bundle. The smoke test is intentionally noisy on failure to make this easy.
+The smoke test is intentionally noisy on failure to make this easy.

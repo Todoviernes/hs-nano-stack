@@ -6,6 +6,8 @@
     "name": "Santiago Vallejo",
     "email": "santiagovallejoc@gmail.com"
   },
+  "homepage": "https://github.com/Todoviernes/hs-nano-stack",
+  "repository": "https://github.com/Todoviernes/hs-nano-stack",
   "license": "Apache-2.0",
   "keywords": [
     "hubspot",

@@ -1,5 +1,7 @@
 # hs-nano-stack (`hsns`)
 
+[![smoke](https://github.com/Todoviernes/hs-nano-stack/actions/workflows/smoke.yml/badge.svg)](https://github.com/Todoviernes/hs-nano-stack/actions/workflows/smoke.yml) [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE) [![Plugin: hsns](https://img.shields.io/badge/Claude%20Code-plugin-7C3AED)](https://docs.anthropic.com/claude-code)
+
 A Claude Code plugin that ports the [garagon/nanostack](https://github.com/garagon/nanostack) phase-gated AI workflow into a domain-specialized stack for **HubSpot CMS Hub** development — themes, landing pages, modules, and email templates, written in HubL on top of vanilla CSS variables.
 
 > **Why.** Generalist AI agents leak in three predictable ways on HubSpot: HubL syntax mistakes, schema drift between `theme.json` / `fields.json` / `meta.json`, and skipped marketplace + Core Web Vitals gates. `hsns` solves all three with a phase chain that reads upstream artifacts and refuses to drift.
@@ -24,21 +26,43 @@ Plus: `/hsns:feature` (additive change, skips `/think`), `/hsns:help` (one-pager
 
 ## Install
 
-```bash
-# 1. Install the HubSpot CLI globally (8.2.0+ for MCP support)
-npm install -g @hubspot/cli@latest
-hs --version  # expect >= 8.2.0
+### Option A — From GitHub (recommended)
 
-# 2. Install this plugin via local marketplace
-claude plugins marketplace add /path/to/hs-nano-stack
+```bash
+# 1. HubSpot CLI 8.2.0+ (required for MCP)
+npm install -g @hubspot/cli@latest
+hs --version
+
+# 2. Add the marketplace + install the plugin
+claude plugins marketplace add Todoviernes/hs-nano-stack
 claude plugins install hsns@hs-nano-stack
 
 # 3. (Optional, recommended) Wire HubSpot's Developer MCP into Claude Code
 hs mcp setup --client claude
-# Restart Claude Code afterward.
+
+# Restart Claude Code so the plugin commands and MCP tools register.
 ```
 
-The MCP install adds 19 HubSpot tools (`search-docs`, `fetch-doc`, `create-test-account`, `create-cms-module`, etc.) that the phases use opportunistically. See `docs/MCP-SETUP.md`.
+### Option B — From a local clone (for plugin development)
+
+```bash
+git clone https://github.com/Todoviernes/hs-nano-stack
+cd hs-nano-stack
+claude plugins marketplace add "$(pwd)"
+claude plugins install hsns@hs-nano-stack
+```
+
+After install, `claude plugins list` should show `hsns@hs-nano-stack`.
+
+The MCP install adds 19 HubSpot tools (`search-docs`, `fetch-doc`, `create-test-account`, `create-cms-module`, etc.) that the phases use opportunistically. See [docs/MCP-SETUP.md](docs/MCP-SETUP.md).
+
+## Updating
+
+```bash
+claude plugins marketplace update hs-nano-stack
+claude plugins update hsns@hs-nano-stack
+# Restart Claude Code to apply.
+```
 
 ## Quickstart
 
